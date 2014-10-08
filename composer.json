@@ -1,0 +1,32 @@
+{
+    "name": "shamiao/l4mysqlqueue",
+    "description": "A laravel 4 queue driver using MySQL database, developed for small websites. ",
+    "keywords": [
+        "laravel",
+        "queue",
+        "mysql"
+    ],
+    "homepage": "https://github.com/shamiao/l4mysqlqueue",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "SHA Miao",
+            "email": "shamiaoc@gmail.com",
+            "homepage": "http://miao.im"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "nesbot/carbon": "~1.0",
+        "illuminate/support": "4.2.*"
+    },
+    "autoload": {
+        "classmap": [
+            "src/migrations"
+        ],
+        "psr-0": {
+            "Shamiao\\L4mysqlqueue\\": "src/"
+        }
+    },
+    "minimum-stability": "stable"
+}
