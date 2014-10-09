@@ -2,9 +2,7 @@
 
 use DateTime;
 use Carbon\Carbon;
-use Shamiao\L4mysqlqueue\Queue\Jobs\MysqlJob;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Config;
 use Illuminate\Queue\Queue;
 use Illuminate\Queue\QueueInterface;
 use ErrorException;
@@ -33,7 +31,8 @@ class MysqlQueue extends Queue implements QueueInterface {
      */
     public function __construct($queue = null)
     {
-        $this->table = Config::get('queue.connections.mysql.table', 'queue');
+        $this->table = \Illuminate\Support\Facades\
+            Config::get('queue.connections.mysql.table', 'queue');
 
         if ($queue === null) { $queue = 'default'; }
         $this->queue = $queue;
@@ -106,7 +105,7 @@ class MysqlQueue extends Queue implements QueueInterface {
             ->orderBy('fireon', 'asc');
         if ($query->count() == 0) {return null;}
         $record = $query->first();
-        return new MysqlJob($this->container, $record->ID, $record);
+        return new Jobs\MysqlJob($this->container, $record->ID, $record);
     }
 
     /**

@@ -1,7 +1,6 @@
 <?php namespace Shamiao\L4mysqlqueue;
 
 use Illuminate\Support\ServiceProvider;
-use Shamiao\L4mysqlqueue\Queue\Connectors\MysqlConnector;
 
 class L4mysqlqueueServiceProvider extends ServiceProvider {
 
@@ -23,7 +22,7 @@ class L4mysqlqueueServiceProvider extends ServiceProvider {
         $manager = $this->app['queue'];
 		$manager->addConnector('mysql', function()
 		{
-		    return new MysqlConnector;
+		    return new Queue\Connectors\MysqlConnector;
 		});
 	}
 

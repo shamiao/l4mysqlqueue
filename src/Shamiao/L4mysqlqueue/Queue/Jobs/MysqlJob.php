@@ -6,7 +6,6 @@ use DateTime;
 use Carbon\Carbon;
 use Illuminate\Container\Container;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Config;
 use Illuminate\Queue\Jobs\Job;
 
 class MysqlJob extends Job {
@@ -56,7 +55,8 @@ class MysqlJob extends Job {
      */
     public function __construct(Container $container, $id, $record = null)
     {
-        $this->table = Config::get('queue.connections.mysql.table', 'queue');
+        $this->table = Illuminate\Support\Facades\
+            Config::get('queue.connections.mysql.table', 'queue');
 
         $this->container = $container;
         $this->id = $id;
