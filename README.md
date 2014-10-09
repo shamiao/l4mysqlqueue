@@ -14,7 +14,7 @@ Features
 
  - Only use 1 table, and table name is customizable.
  - Works correctly with any database table prefix, collation and charset. 
- - MySQL only. (small changes may need for other type of database) 
+ - MySQL only. (small changes may need for other types of database) 
 
 Installation
 ------------
@@ -46,7 +46,7 @@ Setup `mysql` driver in `config/queue.php`:
 Run database migrations of this package before using it: 
 
 ```
-php artisan migrate --package="shamiao/l4mysqlqueue"`
+php artisan migrate --package="shamiao/l4mysqlqueue"
 ```   
 
 
