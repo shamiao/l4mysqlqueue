@@ -6,9 +6,17 @@ use DateTime;
 use Carbon\Carbon;
 use Illuminate\Container\Container;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Queue\Jobs\Job;
 
 class MysqlJob extends Job {
+
+    /**
+     * Name of queue table.
+     *
+     * @var string
+     */
+    protected $table;
 
     /**
      * Database id of the job.
@@ -48,10 +56,12 @@ class MysqlJob extends Job {
      */
     public function __construct(Container $container, $id, $record = null)
     {
+        $this->table = Config::get('queue.connections.mysql.table', 'queue');
+
         $this->container = $container;
         $this->id = $id;
         if ($record === null) { 
-            $this->record = get_object_vars(DB::table('queue')->find($id)); 
+            $this->record = get_object_vars(DB::table($this->table)->find($id)); 
         } else { $this->record = get_object_vars($record); }
 
         $this->queue = $this->record['queue_name'];
@@ -71,7 +81,7 @@ class MysqlJob extends Job {
     {
         $this->record['attempts'] += 1;
         $this->record['status'] = 'running';
-        DB::table('queue')->where('ID', $this->id)->update([
+        DB::table($this->table)->where('ID', $this->id)->update([
             'attempts' => $this->record['attempts'],
             'status' => $this->record['status'],
         ]);
@@ -102,7 +112,7 @@ class MysqlJob extends Job {
     {
         $this->record['status'] = 'pending';
         $this->record['fireon'] = Carbon::now()->addSeconds($delay)->getTimestamp();
-        DB::table('queue')->where('ID', $this->id)->update([
+        DB::table($this->table)->where('ID', $this->id)->update([
             'status' => $this->record['status'],
             'fireon' => $this->record['fireon'],
         ]);
@@ -136,7 +146,7 @@ class MysqlJob extends Job {
     public function delete()
     {
         $this->record['status'] = 'deleted';
-        DB::table('queue')->where('ID', $this->id)->update([
+        DB::table($this->table)->where('ID', $this->id)->update([
             'status' => $this->record['status'],
         ]);
     }

@@ -4,11 +4,19 @@ use DateTime;
 use Carbon\Carbon;
 use Shamiao\L4mysqlqueue\Queue\Jobs\MysqlJob;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Queue\Queue;
 use Illuminate\Queue\QueueInterface;
 use ErrorException;
 
 class MysqlQueue extends Queue implements QueueInterface {
+
+    /**
+     * Name of queue table.
+     *
+     * @var string
+     */
+    protected $table;
 
     /**
      * The name of queue. 
@@ -25,6 +33,8 @@ class MysqlQueue extends Queue implements QueueInterface {
      */
     public function __construct($queue = null)
     {
+        $this->table = Config::get('queue.connections.mysql.table', 'queue');
+
         if ($queue === null) { $queue = 'default'; }
         $this->queue = $queue;
     }
@@ -90,7 +100,7 @@ class MysqlQueue extends Queue implements QueueInterface {
      */
     public function pop($queue = null) {
         if ($queue === null) { $queue = $this->queue; }
-        $query = DB::table('queue')->where('queue_name', $queue)
+        $query = DB::table($this->table)->where('queue_name', $queue)
             ->where('status', 'pending')
             ->where('fireon', '<', time())
             ->orderBy('fireon', 'asc');
@@ -112,7 +122,7 @@ class MysqlQueue extends Queue implements QueueInterface {
         if (!$time instanceof DateTime) {
             throw new ErrorException('An explicit DateTime value $time is required. ');
         }
-        $jobId = DB::table('queue')->insertGetId([
+        $jobId = DB::table($this->table)->insertGetId([
             'queue_name' => $queue, 
             'payload'  => $payload, 
             'status'   => 'pending', 
