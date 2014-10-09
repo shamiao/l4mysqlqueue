@@ -55,7 +55,7 @@ class MysqlJob extends Job {
      */
     public function __construct(Container $container, $id, $record = null)
     {
-        $this->table = Illuminate\Support\Facades\
+        $this->table = \Illuminate\Support\Facades\
             Config::get('queue.connections.mysql.table', 'queue');
 
         $this->container = $container;
