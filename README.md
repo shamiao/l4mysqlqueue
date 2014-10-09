@@ -81,3 +81,4 @@ Notes
 ------------
 
  - You may need SSH access or cron jobs privileges in your cPanel/DirectAdmin control panel to run `composer` or `php artisan` console commands. 
+ - Jobs are soft-deleted (only marking status as 'deleted' instead of SQL DELETE). Consider making your own schedule to delete deprecated jobs from database manually. 
