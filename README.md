@@ -5,14 +5,16 @@ A laravel 4 queue driver using MySQL database, developed for small websites on s
 
 Fully functional and 100% native. No special artisan commands for firing jobs required or provided. 
 
+[![Packagist version](http://img.shields.io/packagist/v/shamiao/l4mysqlqueue.svg)](https://packagist.org/packages/shamiao/l4mysqlqueue)
+[![Total downloads](http://img.shields.io/packagist/dt/shamiao/l4mysqlqueue.svg)](https://packagist.org/packages/shamiao/l4mysqlqueue)
+
 Features
 ------------
 
  - Support native `queue:listen`, `queue:work` and other artisan commands. 
  - Attempts count are recorded. 
  - Support multiple queues. 
-
- - Only use 1 table, and table name is customizable.
+ - Only use 1 table. Customizable table name .
  - Works correctly with any database table prefix, collation and charset. 
  - MySQL only. (small changes may need for other types of database) 
 
