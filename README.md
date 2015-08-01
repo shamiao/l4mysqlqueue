@@ -41,7 +41,7 @@ Setup `mysql` driver in `config/queue.php`:
     'mysql' => array(
         'driver' => 'mysql',
         'queue'  => 'default', // Optional
-        'table'  => 'queue','  // Optional
+        'table'  => 'queue',  // Optional
     ),
 ```
 
