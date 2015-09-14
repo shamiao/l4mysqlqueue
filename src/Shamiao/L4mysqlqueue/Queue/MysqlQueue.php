@@ -125,7 +125,7 @@ class MysqlQueue extends Queue implements QueueInterface {
             'queue_name' => $queue, 
             'payload'  => $payload, 
             'status'   => 'pending', 
-            'attempts' => 1, 
+            'attempts' => 0, 
             'fireon'   => $time->getTimestamp(), 
         ]);
         return $jobId; 
